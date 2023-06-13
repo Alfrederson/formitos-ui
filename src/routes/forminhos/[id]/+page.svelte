@@ -70,7 +70,7 @@
                     <tr>
                         <td>{resposta.name}</td>
                         <td>{resposta.email}</td>
-                        <td>{resposta.message}</td>
+                        <td><a href="/forminhos/{$page.params.id}/{resposta.answer_id}">{resposta.message}</a></td>
                         <td><a href="/forminhos/apagar/{$page.params.id}/{resposta.answer_id}">🗑️</a></td>
                     </tr>
                     {/each}
