@@ -49,7 +49,7 @@ async function doLogin(data){
             user.logged = true
             user.tryingToLogIn = false
             user.claims = parseJWT( result.tok )
-            return state
+            return user
         })
     }else{
         localStorage.removeItem("token")

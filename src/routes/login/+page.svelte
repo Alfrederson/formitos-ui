@@ -2,7 +2,6 @@
     import { goto } from "$app/navigation"
     import { doLogin } from "../../store/user"
     import IconError from "../../components/IconError.svelte";
-    import { redirect } from "@sveltejs/kit";
 
     let form = {
         email : "",
@@ -17,7 +16,7 @@
         error = ""
         try{
             await doLogin(form)
-            goto("/ver")
+            goto("/forminhos")
         }catch(e){
             // @ts-expect-error
             error = e

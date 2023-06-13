@@ -9,20 +9,25 @@
 
 </script>
 
-<div class="navbar bg-secondary text-neutral-content">
+<div class="navbar">
     <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl" href="/landing">Forminho</a>
+      <a class="btn btn-ghost normal-case text-xl" href="/">📝 Forminho</a>
     </div>
     <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
-        {#if $user.logged}
-          <li><a href="/forminhos">Seus forminhos</a></li>
-          <li><b>{$user.claims.name}</b></li>
+      <div class="dropdown dropdown-end">
+        {#if $user.logged}          
+          <label tabindex="0" class="btn btn-ghost">
+            <b>{$user.claims.name}</b>
+          </label>
+          <ul tabindex="0" class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+            <li><a href="/forminhos">Seus forminhos</a></li>
+            <li><a>Logout</a></li>
+          </ul>
         {:else}
-          <li><a href="/login">Login</a></li>
-          <li><a href="/signup">Criar conta</a></li>
+          <a class="btn btn-ghost" href="/signup">Criar conta</a>
+          <a class="btn btn-primary" href="/login">Login</a>
         {/if}
-      </ul>
+      </div>
     </div>
   </div>
 
