@@ -9,7 +9,7 @@
 
     import { cachedQuery } from "../../store/cachedQuery";
 
-    /** @typedef {{ name: string; id: string; visibility: "public" | "private" }} Forminho */
+    /** @typedef {{ name: string; id: string; visibility: "public" | "private"; answer_count : number }} Forminho */
 
     let busy = false
     let erro = ""
@@ -169,6 +169,7 @@
                 <tr>
                     <td>Nome</td>
                     <td>Visibilidade</td>
+                    <td>Respostas</td>
                     <td></td>
                 </tr>
             </thead>
@@ -181,6 +182,7 @@
                         <td>
                         {forminho.visibility == "public" ? "Público" : "Privado"}
                         </td>
+                        <td>{forminho.answer_count}</td>
                         <td>
                             <button class="btn btn-ghost" on:click={ ()=> editarForminho(forminho)}>📝</button>
                             <button class="btn btn-ghost" on:click={ ()=> deletarForminho(forminho)}>🗑️</button>

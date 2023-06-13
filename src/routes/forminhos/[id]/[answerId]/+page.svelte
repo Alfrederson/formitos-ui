@@ -2,11 +2,16 @@
     import { page } from "$app/stores"
     import { cachedQuery } from "../../../../store/cachedQuery";
 
+    import Alert from "../../../../components/Alert.svelte";
+
     const [resposta, updater] = cachedQuery("/answer/"+$page.params.id+"/"+$page.params.answerId)
 </script>
 
 <div class="container w-full overflow-x-clip">
 {#if $resposta.carregado}
+    {#if $resposta.error}
+        <Alert color="error">{$resposta.error.err}</Alert>
+    {/if}   
     {#if $resposta.data}
     <article class="prose">
         <div class="mb-3">

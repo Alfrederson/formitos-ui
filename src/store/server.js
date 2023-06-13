@@ -27,7 +27,7 @@ async function req(url, options){
 
     let response = await fetch(BASE_URL + url, requestOptions)
     if(response.status !== 200){
-        let text = await response.text()
+        let text = await response.json()
         throw text
     }
     let obj = await response.json()
