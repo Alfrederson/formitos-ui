@@ -1,7 +1,7 @@
 <script>
     import "../app.css"
     import { onMount } from "svelte";
-    import { user, checkIfLogged } from "../store/user"
+    import { user, doLogOut, checkIfLogged } from "../store/user"
 
     onMount( ()=>{
       checkIfLogged()
@@ -21,7 +21,7 @@
           </label>
           <ul tabindex="0" class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
             <li><a href="/forminhos">Seus forminhos</a></li>
-            <li><a>Logout</a></li>
+            <li><button on:click={doLogOut}>Logout</button></li>
           </ul>
         {:else}
           <a class="btn btn-ghost" href="/signup">Criar conta</a>

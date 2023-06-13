@@ -2,7 +2,7 @@
     // interface do usuário.
     import { goto } from "$app/navigation";
     import { user } from "../../store/user";
-    import { req } from "../../store/server"
+    import { req, busy, busyMutex } from "../../store/server"
 
     import Modal from "../../components/Modal.svelte";
     import ModalBody from "../../components/ModalBody.svelte";
@@ -11,7 +11,6 @@
 
     /** @typedef {{ name: string; id: string; visibility: "public" | "private"; answer_count : number }} Forminho */
 
-    let busy = false
     let erro = ""
     let novoForminho = {
         name : "nome do novo forminho",
@@ -24,20 +23,6 @@
 
 
     let [forminhos, updater] = cachedQuery("/forms")
-    /**
-     * @param {{ (): Promise<void>; (): any; }} func
-     */
-    async function busyMutex( func ){
-        if(busy) return;
-        busy = true;
-        try{
-            await func()
-        }catch(e){
-            // @ts-ignore
-            erro = e
-        }
-        busy = false
-    }
     /**
      * Manda uma requisição para deletar um form.
      */

@@ -1,4 +1,4 @@
-import { user, doLogin, checkIfLogged } from "./user"
+import { user, doLogin, doLogOut, checkIfLogged } from "./user"
 
 type LoginData = {
     email : string,
@@ -19,4 +19,4 @@ type UserStore = {
     claims: UserClaims,
 }
 
-export { user, doLogin, checkIfLogged, LoginData, UserStore, UserClaims }
+export { user, doLogin, doLogOut, checkIfLogged, LoginData, UserStore, UserClaims }

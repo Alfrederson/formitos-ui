@@ -34,4 +34,21 @@ async function req(url, options){
     return obj
 }
 
-export { req }
+let busy = false, erro = "";
+/**
+ * @param {{ (): Promise<void>; (): any; }} func
+ */
+async function busyMutex( func ){
+    if(busy) return;
+    busy = true;
+    try{
+        await func()
+    }catch(e){
+        // @ts-ignore
+        erro = e
+    }
+    busy = false
+}
+
+
+export { req, busy, erro, busyMutex }

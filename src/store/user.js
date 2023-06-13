@@ -82,4 +82,13 @@ async function checkIfLogged(){
     }
 }
 
-export { user, doLogin, checkIfLogged }
+function doLogOut(){
+    localStorage.removeItem("token")
+    user.update( user => {
+        user.logged = false
+        user.claims = {}
+        return user
+    })
+}
+
+export { user, doLogin, doLogOut, checkIfLogged }
