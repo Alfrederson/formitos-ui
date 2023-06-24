@@ -17,8 +17,10 @@
      * @property {string} ip
      * @property {string} name
      * @property {string} email
-     * @property {string} messag
+     * @property {string} message
     */
+
+    let mostrandoIntegracao = false
 
     /**
      * @type {{ id:string; user_id:number; name: string; visibility: "public"|"private"; }}
@@ -91,44 +93,48 @@
 <div class="container w-full overflow-x-clip">
 {#if $user.logged}
     {#if $respostas.carregado}
-        {#if form !== undefined}
-            <div class="prose mb-5">
-                <h2>{form.name ?? "{nome do form}"}</h2>
-                <p>
-                    {form.visibility == "private" ? "Form privado." : "Form público."}
-                </p>  
-            </div>
-            <div class="mx-auto w-full mb-5 overflow-x-auto">
-                <div class="prose mb-3">
-                    <p>Para escrever:</p>
-                </div>
-                <pre class="">{apiPostRequestExample}</pre>
-                {#if form.visibility==="public"}
-                <div class="prose mb-3 mt-3">
-                    <p>Para ler 5 respostas a partir da resposta 0 (primeira):</p>
-                </div>
-                <pre class="">{apiListRequestExample}</pre>
+        <div>
+            {#if form !== undefined}
+                <button class="btn btn-primary mb-3" on:click={()=> mostrandoIntegracao = !mostrandoIntegracao}>API</button>
+                {#if mostrandoIntegracao}
+                    <div class="prose mb-5">
+                        <h2>{form.name ?? "{nome do form}"}</h2>
+                        <p>
+                            {form.visibility == "private" ? "Form privado." : "Form público."}
+                        </p>  
+                    </div>
+                    <div class="mx-auto w-full mb-5 overflow-x-auto">
+                        <div class="prose mb-3">
+                            <p>Para escrever:</p>
+                        </div>
+                        <pre class="">{apiPostRequestExample}</pre>
+                        {#if form.visibility==="public"}
+                        <div class="prose mb-3 mt-3">
+                            <p>Para ler 5 respostas a partir da resposta 0 (primeira):</p>
+                        </div>
+                        <pre class="">{apiListRequestExample}</pre>
+                        {/if}
+                    </div>
                 {/if}
-            </div>
-        {/if}
-
+            {/if}
+        </div>
         {#if $respostas.data.answers}
         <div class="overflow-x-auto">
             <table class="table mx-auto w-full">
                 <thead>
                     <tr>
+                        <td>Mensagem</td>
                         <td>Nome</td>
                         <td>E-mail</td>
-                        <td>Mensagem</td>
                         <td></td>
                     </tr>
                 </thead>
                 <tbody>
                     {#each $respostas.data.answers as resposta (resposta)}
                     <tr>
+                        <td><a href="/forminhos/{$page.params.id}/{resposta.answer_id}">{resposta.message}</a></td>
                         <td>{resposta.name}</td>
                         <td>{resposta.email}</td>
-                        <td><a href="/forminhos/{$page.params.id}/{resposta.answer_id}">{resposta.message}</a></td>
                         <td><button on:click={()=>apagarResposta(resposta.answer_id)}>🗑️</button></td>
                     </tr>
                     {/each}

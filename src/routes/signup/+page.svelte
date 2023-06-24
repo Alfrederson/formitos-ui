@@ -16,16 +16,16 @@
     <div class="modal-body">
 
         <p class="py-4">Nome:</p>
-        <input type="text" placeholder="Nome" class="input input-bordered w-full" bind:value={form.name}/>
+        <input type="text" required placeholder="Nome" class="input input-bordered w-full" bind:value={form.name}/>
 
         <p class="py-4">E-mail:</p>
-        <input type="text" placeholder="E-mail" class="input input-bordered w-full" bind:value={form.email}/>
+        <input type="text" required placeholder="E-mail" class="input input-bordered w-full" bind:value={form.email}/>
 
         <p class="py-4">Senha:</p>
-        <input type="password" placeholder="Senha" class="input input-bordered w-full" bind:value={form.password}/>
+        <input type="password" required placeholder="Senha" class="input input-bordered w-full" bind:value={form.password}/>
 
         <p class="py-4">Confirmar senha:</p>
-        <input type="password" placeholder="Senha" class="input input-bordered w-full" bind:value={form.password}/>
+        <input type="password" required placeholder="Senha" class="input input-bordered w-full" bind:value={form.password2}/>
 
     </div>
     <div class="modal-action">

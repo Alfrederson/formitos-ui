@@ -64,21 +64,26 @@ async function checkIfLogged(){
         user.tryingToRefresh = true
         return user
     })
-    let result = await req("/auth/refresh",{
-        method : 'POST'
-    })
-    // ieaeaaaarhhhh
-    if(result.tok){
-        localStorage.setItem("token", result.tok)
-        user.update( user =>{
-            user.tryingToRefresh=false
-            user.logged=true
-            user.claims = parseJWT( result.tok )
-            return user
+    try{ 
+        let result = await req("/auth/refresh",{
+            method : 'POST'
         })
-    }else{
-        localStorage.removeItem("token")
-        user.set({...initialValues})
+        // ieaeaaaarhhhh
+        if(result.tok){
+            localStorage.setItem("token", result.tok)
+            user.update( user =>{
+                user.tryingToRefresh=false
+                user.logged=true
+                user.claims = parseJWT( result.tok )
+                return user
+            })
+        }else{
+            localStorage.removeItem("token")
+            user.set({...initialValues})
+        }
+    }catch(e){
+        // isso vai ser tipo {err : "não autenticado"}
+        // console.log(e)
     }
 }
 
