@@ -85,7 +85,18 @@ async function doSignUp(data){
             password: data.password
         }
     })
-
+    if(result.tok){
+        localStorage.setItem("token", result.tok)
+        user.update( user => {
+            user.logged=true
+            user.checked=true
+            user.claims = parseJWT( result.tok )
+            return user
+        })
+    }else{
+        localStorage.removeItem("token")
+        user.set({...initialValues, checked : true})
+    }
     user.unlock()
 }
 
@@ -132,7 +143,7 @@ async function checkIfLogged(){
 
 function doLogOut(){
     localStorage.removeItem("token")
-    user.set( {...initialValues} )
+    user.set( {...initialValues, checked: true} )
 }
 
 

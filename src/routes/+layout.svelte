@@ -8,9 +8,8 @@
       checkIfLogged()
     })
 
-    function logOut(){
-      goto("/")
-      doLogOut()
+    async function logOut(){
+      await doLogOut()
     }
 </script>
 

@@ -19,7 +19,7 @@
             goto("/forminhos")
         }catch(e){
             // @ts-expect-error
-            error = e
+            error = e.err ?? "Alguma coisa deu errado e não sei o que mostrar."
         }
         busy = false
     }

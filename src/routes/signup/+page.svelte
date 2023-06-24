@@ -18,7 +18,7 @@
       goto("/forminhos")
     }catch(e){
       //@ts-expect-error
-      error = e
+      error = e.err ?? "Alguma coisa deu errado e não tenho mensagem para mostrar."
     }
     busy = false
   }
@@ -29,7 +29,12 @@
   <div class="modal-box">
     <h3 class="font-bold text-lg">Criar conta</h3>
     <div class="modal-body">
-
+        {#if error}
+          <div class="alert alert-error">
+              <IconError/>
+              <span>{error}</span>
+          </div>
+        {/if}
         <p class="py-4">Nome:</p>
         <input type="text" required placeholder="Nome" class="input input-bordered w-full" bind:value={form.name}/>
 
