@@ -1,8 +1,8 @@
 <script>
     import { page } from "$app/stores"
-    import { cachedQuery } from "../../../../store/cachedQuery";
+    import { cachedQuery } from "../../../../../store/cachedQuery";
 
-    import Alert from "../../../../components/Alert.svelte";
+    import Alert from "../../../../../components/Alert.svelte";
 
     const [resposta, updater] = cachedQuery("/answer/"+$page.params.id+"/"+$page.params.answerId)
 </script>

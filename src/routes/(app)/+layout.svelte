@@ -1,8 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import "../app.css"
-    import { user, doLogOut, checkIfLogged } from "../store/user"
-    import { goto } from "$app/navigation";
+    import "../../app.css"
+    import { user, doLogOut, checkIfLogged } from "../../store/user"
 
     onMount( ()=>{
       checkIfLogged()

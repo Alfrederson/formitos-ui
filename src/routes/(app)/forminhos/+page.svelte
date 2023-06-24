@@ -1,13 +1,13 @@
 <script>
     // interface do usuário.
     import { goto } from "$app/navigation";
-    import { user } from "../../store/user";
-    import { req, busy, busyMutex } from "../../store/server"
+    import { user } from "../../../store/user";
+    import { req, busy, busyMutex } from "../../../store/server"
 
-    import Modal from "../../components/Modal.svelte";
-    import ModalBody from "../../components/ModalBody.svelte";
+    import Modal from "../../../components/Modal.svelte";
+    import ModalBody from "../../../components/ModalBody.svelte";
 
-    import { cachedQuery } from "../../store/cachedQuery";
+    import { cachedQuery } from "../../../store/cachedQuery";
 
     /** @typedef {{ name: string; id: string; visibility: "public" | "private"; answer_count : number }} Forminho */
 

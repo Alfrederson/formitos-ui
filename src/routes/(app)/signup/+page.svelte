@@ -1,6 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
-  import { doSignUp } from "../../store/user"
+  import { doSignUp } from "../../../store/user"
   let busy = false
   let error = ""
 
@@ -22,7 +22,7 @@
     }
     busy = false
   }
-  import IconError from "../../components/IconError.svelte";   
+  import IconError from "../../../components/IconError.svelte";   
 </script>
 
 <div class="modal modal-open modal-bottom sm:modal-middle">

@@ -2,14 +2,14 @@
     import { page } from "$app/stores"
     import { goto } from "$app/navigation"
 
-    import { cachedQuery } from "../../../store/cachedQuery";
-    import { user } from "../../../store/user"
+    import { cachedQuery } from "../../../../store/cachedQuery";
+    import { user } from "../../../../store/user"
 
-    import IconInfo from "../../../components/IconInfo.svelte";
-    import Alert from "../../../components/Alert.svelte";
-    import Modal from "../../../components/Modal.svelte";
-    import ModalBody from "../../../components/ModalBody.svelte";
-    import { busy, erro, busyMutex, req } from "../../../store/server";
+    import IconInfo from "../../../../components/IconInfo.svelte";
+    import Alert from "../../../../components/Alert.svelte";
+    import Modal from "../../../../components/Modal.svelte";
+    import ModalBody from "../../../../components/ModalBody.svelte";
+    import { busy, erro, busyMutex, req } from "../../../../store/server";
 
     let [respostas, updater] = cachedQuery("/form/"+$page.params.id)
 

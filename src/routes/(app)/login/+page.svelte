@@ -1,7 +1,7 @@
 <script>
     import { goto } from "$app/navigation"
-    import { doLogin } from "../../store/user"
-    import IconError from "../../components/IconError.svelte";
+    import { doLogin } from "../../../store/user"
+    import IconError from "../../../components/IconError.svelte";
 
     let form = {
         email : "",
