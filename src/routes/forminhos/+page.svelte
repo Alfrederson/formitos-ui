@@ -107,6 +107,10 @@
         })
         editandoForminho=false;
     }
+
+    $: if($user.checked && !$user.logged){
+        goto("/login")
+    }
 </script>
 {#if deletandoForminho}
 <Modal title="Deletar esse forminho?">

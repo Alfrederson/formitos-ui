@@ -1,13 +1,28 @@
 <script>
-    let form = {
-        name : "",
-        email : "",
-        password : "",
-        password2: ""
-    }
-    function tentarCadastrar(){
+  import { goto } from "$app/navigation";
+  import { doSignUp } from "../../store/user"
+  let busy = false
+  let error = ""
 
+  let form = {
+      name : "",
+      email : "",
+      password : "",
+      password2: ""
+  }
+  async function tentarCadastrar(){
+    if(busy) return;
+    busy = true
+    try{
+      await doSignUp(form)
+      goto("/forminhos")
+    }catch(e){
+      //@ts-expect-error
+      error = e
     }
+    busy = false
+  }
+  import IconError from "../../components/IconError.svelte";   
 </script>
 
 <div class="modal modal-open modal-bottom sm:modal-middle">

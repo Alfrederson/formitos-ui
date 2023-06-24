@@ -1,8 +1,14 @@
-import { user, doLogin, doLogOut, checkIfLogged } from "./user"
+import { user, doLogin, doLogOut, doSignUp, checkIfLogged } from "./user"
 
 type LoginData = {
     email : string,
     password: string
+}
+
+type SignUpData = {
+    email : string,
+    name  : string,
+    password: string,
 }
 
 type UserClaims = {
@@ -19,4 +25,4 @@ type UserStore = {
     claims: UserClaims,
 }
 
-export { user, doLogin, doLogOut, checkIfLogged, LoginData, UserStore, UserClaims }
+export { user, doLogin, doLogOut, doSignUp, checkIfLogged, LoginData, SignUpData, UserStore, UserClaims }

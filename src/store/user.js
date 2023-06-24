@@ -4,6 +4,7 @@ import { writable } from "svelte/store";
 /**
  * @typedef {import('./user').UserClaims} UserClaims
  * @typedef {import('./user').LoginData} LoginData
+ * @typedef {import('./user').SignUpData} SignUpData
  * @typedef {import('./user').UserStore} UserStore
  */
 
@@ -20,24 +21,37 @@ function parseJWT(token) {
 /** @type {UserStore} */
 const initialValues = {
     logged: false,
-    tryingToLogIn: false,
-    tryingToRefresh: false,
+    checked:false,
+    busy: false,
     claims: {},
 }
 
 /** @type {import("svelte/store").Writable<UserStore>} */
-const user = writable(initialValues)
+const user = (function(){
+    let store = writable(initialValues)
+    store.lock = function(){
+        store.update( s =>{
+            s.busy = true
+            return s
+        })
+    }
+    store.unlock = function(){
+        store.update( s=>{
+            s.busy = false
+            return s
+        })
+    }
+    return store
+})()
 
 /**
  * @param {LoginData} data 
  */
 async function doLogin(data){
-    if(user.tryingToLogIn)
+    if(user.busy)
         return;
-    user.update( user =>{
-        user.tryingToLogIn = true
-        return user
-    })
+    user.lock()
+
     const {email, password} = data
     let result = await req("/auth/signin",{
         method : 'POST',
@@ -46,24 +60,51 @@ async function doLogin(data){
     if(result.tok){
         localStorage.setItem("token", result.tok)
         user.update( user => {
-            user.logged = true
-            user.tryingToLogIn = false
+            user.logged=true
+            user.checked=true
             user.claims = parseJWT( result.tok )
             return user
         })
     }else{
         localStorage.removeItem("token")
-        user.set({...initialValues})
+        user.set({...initialValues, checked : true})
     }
+
+    user.unlock()
+}
+
+async function doSignUp(data){
+    if(user.busy)
+        return;
+    user.lock()
+    let result = await req("/auth/signup",{
+        method : 'POST',
+        body : {
+            name    : data.name,
+            email   : data.email,
+            password: data.password
+        }
+    })
+
+    user.unlock()
 }
 
 async function checkIfLogged(){
-    if(user.tryingToRefresh)
+    console.log("Checando se logado...")
+    if(user.busy)
         return;
-    user.update( user=>{
-        user.tryingToRefresh = true
-        return user
-    })
+    if(!localStorage.getItem("token")){
+        user.update( user => ({
+                ...user,
+                busy : false,
+                logged : false,
+                checked : true,
+                claims : {}
+            })
+        )
+        return
+    }
+    user.lock()
     try{ 
         let result = await req("/auth/refresh",{
             method : 'POST'
@@ -71,12 +112,13 @@ async function checkIfLogged(){
         // ieaeaaaarhhhh
         if(result.tok){
             localStorage.setItem("token", result.tok)
-            user.update( user =>{
-                user.tryingToRefresh=false
-                user.logged=true
-                user.claims = parseJWT( result.tok )
-                return user
-            })
+            user.update( user =>({
+                ...user,
+                busy:false,
+                logged:true,
+                checked:true,
+                claims: parseJWT( result.tok)
+            }) )
         }else{
             localStorage.removeItem("token")
             user.set({...initialValues})
@@ -85,15 +127,13 @@ async function checkIfLogged(){
         // isso vai ser tipo {err : "não autenticado"}
         // console.log(e)
     }
+    user.unlock()
 }
 
 function doLogOut(){
     localStorage.removeItem("token")
-    user.update( user => {
-        user.logged = false
-        user.claims = {}
-        return user
-    })
+    user.set( {...initialValues} )
 }
 
-export { user, doLogin, doLogOut, checkIfLogged }
+
+export { user, doLogin, doLogOut, doSignUp, checkIfLogged }

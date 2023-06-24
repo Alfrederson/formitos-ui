@@ -1,5 +1,7 @@
 <script>
     import { page } from "$app/stores"
+    import { goto } from "$app/navigation"
+
     import { cachedQuery } from "../../../store/cachedQuery";
     import { user } from "../../../store/user"
 
@@ -27,13 +29,8 @@
      */
     let form
 
-    $: if($respostas.carregado && $respostas.data){
-        form    = $respostas.data.form;
-    }
-
     let apagandoResposta = false,
-        respostaVitima = 0,
-        ocupadoApagandoResposta = false
+        respostaVitima = 0
 
     const apiPostRequestExample = 
 `curl -X POST -H "Content-Type: application/json" -d '{
@@ -74,6 +71,16 @@
         })
         apagandoResposta=false
     }
+
+    // isso tinha que acontecer antes de mandar carregar as respostas...
+    $: if($user.checked && !$user.logged){
+        goto("/login")
+    }
+
+    $: if($respostas.carregado && $respostas.data){
+        form    = $respostas.data.form;
+    }
+
 </script>
 
 {#if apagandoResposta}
